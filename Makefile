@@ -6,7 +6,7 @@
 #    By: fra <fra@student.42.fr>                      +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/30 15:27:27 by faru          #+#    #+#                  #
-#    Updated: 2023/01/30 23:50:16 by fra           ########   odam.nl          #
+#    Updated: 2023/02/22 21:01:31 by faru          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,15 +41,15 @@ BLUE = \x1b[34;01m
 RESET = \x1b[0m
 YELLOW = \x1b[33;01m
 
-all: $(SERVER) $(CLIENT)
+all: $(LIB_MT) $(LIB_LIBFT) $(SERVER) $(CLIENT)
 	
-$(SERVER): $(LIB_LIBFT) $(LIB_MT) $(SRV_SRC)
+$(SERVER): $(SRV_SRC)
 	@$(CC) $(WFLAGS) $(IFLAGS) -c $(SRV_SRC) -o $(SRV_OBJ)
 	@printf "$(BLUE)Created object $(subst $(OBJ_DIR),,$(SRV_OBJ))$(RESET)\n"
 	@$(CC) $(WFLAGS) $(IFLAGS) $(SRV_OBJ) $(LFLAGS) -o $(SERVER)
 	@printf "$(GREEN)Created executable $(SERVER)$(RESET)\n"
 
-$(CLIENT): $(LIB_LIBFT) $(LIB_MT) $(CNT_SRC)
+$(CLIENT): $(CNT_SRC)
 	@$(CC) $(WFLAGS) $(IFLAGS) -c $(CNT_SRC) -o $(CNT_OBJ)
 	@printf "$(BLUE)Created object $(subst $(OBJ_DIR),,$(CNT_OBJ))$(RESET)\n"
 	@$(CC) $(WFLAGS) $(IFLAGS) $(CNT_OBJ) $(LFLAGS) -o $(CLIENT)
