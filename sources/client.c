@@ -6,7 +6,7 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:09 by fra           #+#    #+#                 */
-/*   Updated: 2023/03/21 02:17:57 by fra           ########   odam.nl         */
+/*   Updated: 2023/03/21 02:50:02 by fra           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	send_string(pid_t pid, char *string)
 
 	while (1)
 	{
+		ft_printf("char: %c\n", *string);
 		mask = 0b10000000;
 		while (mask)
 		{

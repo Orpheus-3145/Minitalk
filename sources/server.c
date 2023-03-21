@@ -6,7 +6,7 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:04 by fra           #+#    #+#                 */
-/*   Updated: 2023/03/21 02:22:38 by fra           ########   odam.nl         */
+/*   Updated: 2023/03/21 02:53:32 by fra           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,27 @@ void	send_signal(pid_t pid, int condition)
 
 void	server_handler(int signum, siginfo_t *client, void *ucontext)
 {
-	static int	i, len, maxlen;
+	static int	i;
 	static char	received;
-	static char *msg;
-	char 		*tmp;
-	int			end_msg;
 
 	(void) ucontext;
 	received <<= 1;
 	received += signum == SIGUSR2;
-	end_msg = 0;
+	ft_printf("henlo! pid: %d\n", client->si_pid);
 	if (++i == 8)
 	{
-		end_msg = ! received;
-		msg[len] = received;
-		len++;
+		if (received)
+		{
+			ft_printf("%c", received);
+			send_signal(client->si_pid, 0);
+		}
+		else
+		{
+			send_signal(client->si_pid, 1);
+			return ;
+		}
 		i = 0;
 	}
-	if (len == maxlen)
-	{
-		maxlen += MAX;
-		tmp = malloc(maxlen * sizeof(char));
-		if (! tmp)
-			ft_raise_error("(minitalk) Memory erro", NULL, 1);
-		ft_strlcpy(tmp, msg, maxlen - MAX + 1);
-		free(msg);
-		msg = tmp;
-	}
-	send_signal(client->si_pid, end_msg);
-	if (! end_msg)
-		return ;
-	ft_printf("%s\n", msg);
-	free(msg);
-	msg = NULL;
-	maxlen = 0;
-	len = 0;
 }
 
 int	main(void)
