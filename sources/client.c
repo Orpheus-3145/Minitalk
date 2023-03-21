@@ -6,13 +6,23 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:09 by fra           #+#    #+#                 */
-/*   Updated: 2023/01/30 23:16:26 by fra           ########   odam.nl         */
+/*   Updated: 2023/03/21 02:17:57 by fra           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 volatile int	g_bit_sent;
+
+void	send_signal(pid_t pid, int condition)
+{
+	if (kill(pid, 0))
+		ft_raise_error("(minitalk) lost connection", NULL, 1);
+	else if (condition)
+		kill(pid, SIGUSR2);
+	else
+		kill(pid, SIGUSR1);
+}
 
 void	send_string(pid_t pid, char *string)
 {
@@ -39,7 +49,25 @@ void	client_handler(int signum)
 	if (signum == SIGUSR1)
 		g_bit_sent = 1;
 	else if (signum == SIGUSR2)
+	{
+		ft_printf("Message sent\n");
 		exit(EXIT_SUCCESS);
+	}
+}
+
+int	check_pid(char *n)
+{
+	int	pid;
+
+	pid = ft_atoi(n);
+	if (pid != (int) ft_atol(n))
+		return (0);
+	else if (! pid && *n != '0')
+		return (0);
+	else if (kill(pid, 0))
+		return (0);
+	else
+		return (1);
 }
 
 int	main(int argc, char **argv)
@@ -53,9 +81,9 @@ int	main(int argc, char **argv)
 	status += sigaction(SIGUSR1, &action, NULL);
 	status += sigaction(SIGUSR2, &action, NULL);
 	if (status)
-		ft_raise_error("Error setting handler for signal", NULL, 1);
+		ft_raise_error("(minitalk) Error setting handler for signal", NULL, 1);
 	else if (argc != 3 || ! check_pid(argv[1]))
-		ft_raise_error("Input error", NULL, 1);
+		ft_raise_error("(minitalk) Input error", NULL, 1);
 	else
 		send_string(ft_atoi(argv[1]), argv[2]);
 	return (0);

@@ -6,26 +6,34 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:04 by fra           #+#    #+#                 */
-/*   Updated: 2023/03/20 20:24:47 by faru          ########   odam.nl         */
+/*   Updated: 2023/03/21 02:22:38 by fra           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#define MAX 1000
+
+void	send_signal(pid_t pid, int condition)
+{
+	if (kill(pid, 0))
+		ft_raise_error("(minitalk) lost connection", NULL, 1);
+	else if (condition)
+		kill(pid, SIGUSR2);
+	else
+		kill(pid, SIGUSR1);
+}
 
 void	server_handler(int signum, siginfo_t *client, void *ucontext)
 {
-	static int	i = 0, len = 0, maxlen = 0;
+	static int	i, len, maxlen;
 	static char	received;
 	static char *msg;
-	char * tmp;
+	char 		*tmp;
 	int			end_msg;
 
 	(void) ucontext;
 	received <<= 1;
 	received += signum == SIGUSR2;
 	end_msg = 0;
-	
 	if (++i == 8)
 	{
 		end_msg = ! received;
@@ -36,7 +44,9 @@ void	server_handler(int signum, siginfo_t *client, void *ucontext)
 	if (len == maxlen)
 	{
 		maxlen += MAX;
-		tmp = malloc(maxlen);
+		tmp = malloc(maxlen * sizeof(char));
+		if (! tmp)
+			ft_raise_error("(minitalk) Memory erro", NULL, 1);
 		ft_strlcpy(tmp, msg, maxlen - MAX + 1);
 		free(msg);
 		msg = tmp;
@@ -66,7 +76,7 @@ int	main(void)
 	status += sigaction(SIGUSR1, &action, NULL);
 	status += sigaction(SIGUSR2, &action, NULL);
 	if (status)
-		ft_raise_error("Error setting handler for signal", NULL, 1);
+		ft_raise_error("(minitalk) Error setting handler for signal", NULL, 1);
 	while (1)
 		;
 	return (0);
