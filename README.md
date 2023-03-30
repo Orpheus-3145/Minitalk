@@ -29,9 +29,9 @@ It is possible to send multiple messages in differente call with stopping the se
 
 # Info
     1) the server does not print the full message after the last symbol 
-    is gained, instead it prints a character every time 8 bits are received: so it can be
-    interrepted due to crashes on client-side, but still can send something before 
-    the communication goes down
+        is gained, instead it prints a character every time 8 bits are 
+        received: so it can be interrepted due to crashes on client-side,
+        but still can send something before the communication goes down
     2) it is possible to use both ASCII and UTF-8 characters
 
 
