@@ -7,7 +7,7 @@ First, the communication relies on the two signals: SIGUSR1 and SIGUSR2; a strin
     - the server PID
     - the message to send (double quotes for multiple words)
 
-It is possible to send multiple messages in differente call with stopping the server
+It is possible to send multiple messages in different calls without stopping the server.
 
 
 # Structure
