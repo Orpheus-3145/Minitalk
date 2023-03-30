@@ -6,7 +6,7 @@
 #    By: fra <fra@student.42.fr>                      +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/30 15:27:27 by faru          #+#    #+#                  #
-#    Updated: 2023/03/21 02:23:58 by fra           ########   odam.nl          #
+#    Updated: 2023/03/30 02:18:54 by fra           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ BLUE = \x1b[34;01m
 RESET = \x1b[0m
 YELLOW = \x1b[33;01m
 
-all: $(LIBFT) $(SERVER) $(CLIENT)
+all: $(LIBFT) $(OBJ_DIR) $(SERVER) $(CLIENT)
 	
 $(SERVER): $(SRV_SRC)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $(SRV_SRC) -o $(SRV_OBJ)
@@ -52,11 +52,13 @@ $(CLIENT): $(CNT_SRC)
 $(LIBFT):
 	@cd libft && $(MAKE) --no-print-directory
 
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
 clean:
 	@$(MAKE) clean -C $(LIBFT_DIR) --quiet
-	@rm -f $(SRV_OBJ) $(CNT_OBJ)
-	@printf "(minitalk) $(RED)Removed $$(basename $(SRV_OBJ))$(RESET)\n"
-	@printf "(minitalk) $(RED)Removed $$(basename $(CNT_OBJ))$(RESET)\n"
+	@-rm -rf $(OBJ_DIR)
+	@printf "(minitalk) $(RED)Removed direcory objects/$(RESET)\n"
 
 fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --quiet

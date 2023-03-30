@@ -6,18 +6,18 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:14 by fra           #+#    #+#                 */
-/*   Updated: 2023/03/21 02:22:01 by fra           ########   odam.nl         */
+/*   Updated: 2023/03/30 02:03:40 by fra           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 # define MAX 1000
-# include <stdio.h>
-# include <signal.h>
-# include <stdlib.h>
-# include <stddef.h>
-# include <unistd.h>
+// # include <stdio.h>
+# include <signal.h>    // signal(), sigemptyset(), kill(), getpid(), ...
+# include <stdlib.h>    // malloc(), free(), exit()
+// # include <stddef.h>
+# include <unistd.h>    // write(), slep(), usleep()
 # include <time.h>
 # include <sys/time.h>
 # include "libft.h"

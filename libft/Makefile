@@ -6,7 +6,7 @@
 #    By: fra <fra@student.42.fr>                      +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/14 18:27:31 by anonymous     #+#    #+#                  #
-#    Updated: 2023/03/21 02:29:03 by fra           ########   odam.nl          #
+#    Updated: 2023/03/30 02:14:35 by fra           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ clean:
 
 fclean:
 	@-rm -f $(NAME)
-	@printf "(libft) $(RED)Removing $(NAME)$(RESET)\n"
+	@printf "(libft) $(RED)Removed $(NAME)$(RESET)\n"
 
 re: fclean all
 
