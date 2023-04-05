@@ -6,7 +6,7 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:04 by fra           #+#    #+#                 */
-/*   Updated: 2023/03/21 02:53:32 by fra           ########   odam.nl         */
+/*   Updated: 2023/04/05 13:21:53 by faru          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,19 @@ void	server_handler(int signum, siginfo_t *client, void *ucontext)
 {
 	static int	i;
 	static char	received;
+	int			end_msg;
 
 	(void) ucontext;
 	received <<= 1;
 	received += signum == SIGUSR2;
-	ft_printf("henlo! pid: %d\n", client->si_pid);
+	end_msg = 0;
 	if (++i == 8)
 	{
-		if (received)
-		{
-			ft_printf("%c", received);
-			send_signal(client->si_pid, 0);
-		}
-		else
-		{
-			send_signal(client->si_pid, 1);
-			return ;
-		}
+		write(1, &received, 1);
+		end_msg = ! received;
 		i = 0;
 	}
+	send_signal(client->si_pid, end_msg);
 }
 
 int	main(void)
