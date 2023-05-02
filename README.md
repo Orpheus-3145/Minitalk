@@ -37,4 +37,4 @@ It is possible to send multiple messages in different calls without stopping the
 
 # References
 - 42 project: [minitalk](https://cdn.intra.42.fr/pdf/pdf/68781/en.subject.pdf)
-- by: Francesco Aru, francesco.aru25@gmail.com, intra42/slack nickname: @faru, Codam, Amsterdam
+- By: Francesco Aru ([GithHub](https://github.com/Orpheus-3145)), francesco.aru25@gmail.com, intra42/slack nickname: @faru, Codam, Amsterdam
