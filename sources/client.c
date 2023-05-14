@@ -6,7 +6,7 @@
 /*   By: fra <fra@student.42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/16 19:25:09 by fra           #+#    #+#                 */
-/*   Updated: 2023/04/05 13:42:56 by faru          ########   odam.nl         */
+/*   Updated: 2023/05/14 17:55:34 by faru          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@ int	main(int argc, char **argv)
 	sigemptyset(&(action.sa_mask));
 	status += sigaction(SIGUSR1, &action, NULL);
 	status += sigaction(SIGUSR2, &action, NULL);
-	printf("arg1: %s\n arg2: %s\n", argv[1], argv[2]);
 	if (status)
 		ft_raise_error("(minitalk) Error setting handler for signal", NULL, 1);
-	// else if (argc != 3 || ! check_pid(argv[1]))
-	// 	ft_raise_error("(minitalk) Input error", NULL, 1);
-	// else
-	send_string(ft_atoi(argv[1]), argv[2]);
+	else if (argc != 3 || ! check_pid(argv[1]))
+		ft_raise_error("(minitalk) Input error", NULL, 1);
+	else
+		send_string(ft_atoi(argv[1]), argv[2]);
 	return (0);
 }
